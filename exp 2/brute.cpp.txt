@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    int n;
+    cout << "THIS IS BRUTE FORCE METHOD BY NAMAN WALIA , 24BAI70451\n";
+
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter the array elements: ";
+    for(int i = 0; i < n; i++)
+    {
+        cin >> nums[i];
+    }
+
+    vector<int> answer(n);
+
+    for(int i = 0; i < n; i++)
+    {
+        int product = 1;
+
+        for(int j = 0; j < n; j++)
+        {
+            if(i != j)
+            {
+                product = product * nums[j];
+            }
+        }
+
+        answer[i] = product;
+    }
+
+    cout << "Product of Array Except Self: ";
+
+    for(int i = 0; i < n; i++)
+    {
+        cout << answer[i] << " ";
+    }
+
+    return 0;
+}
