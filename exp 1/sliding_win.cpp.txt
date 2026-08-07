@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+
+int main()
+{
+    int n, k;
+    cout << "THIS IS Sliding Window + HashMap METHOD BY NAMAN WALIA , 24BAI70451\n";
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter the array elements: ";
+    for(int i = 0; i < n; i++)
+    {
+        cin >> nums[i];
+    }
+
+    cout << "Enter the value of k: ";
+    cin >> k;
+
+    unordered_set<int> window;
+    bool found = false;
+
+    for(int i = 0; i < n; i++)
+    {
+        if(window.find(nums[i]) != window.end())
+        {
+            found = true;
+            break;
+        }
+
+        window.insert(nums[i]);
+
+        if(i >= k)
+        {
+            window.erase(nums[i - k]);
+        }
+    }
+
+    if(found)
+    {
+        cout << "Output: True";
+    }
+    else
+    {
+        cout << "Output: False";
+    }
+
+    return 0;
+}

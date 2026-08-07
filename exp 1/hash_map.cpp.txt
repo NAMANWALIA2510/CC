@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int main()
+{
+    int n, k;
+cout << " THIS IS HASH MAP METHOD BY NAMAN WALIA , 24BAI70451\n";
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter the array elements: ";
+    for(int i = 0; i < n; i++)
+    {
+        cin >> nums[i];
+    }
+
+    cout << "Enter the value of k: ";
+    cin >> k;
+
+    unordered_map<int, int> lastIndex;
+    bool found = false;
+
+    for(int i = 0; i < n; i++)
+    {
+        if(lastIndex.find(nums[i]) != lastIndex.end())
+        {
+            if(i - lastIndex[nums[i]] <= k)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        lastIndex[nums[i]] = i;
+    }
+
+    if(found)
+    {
+        cout << "Output: True";
+    }
+    else
+    {
+        cout << "Output: False";
+    }
+
+    return 0;
+}
