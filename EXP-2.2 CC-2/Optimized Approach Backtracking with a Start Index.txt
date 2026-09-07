@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void backtrack(vector<int>& candidates, int start, vector<int>& current,
+               int remaining, vector<vector<int>>& result) {
+    if (remaining == 0) {
+        result.push_back(current);
+        return;
+    }
+
+    for (int i = start; i < candidates.size(); i++) {
+        if (candidates[i] > remaining)
+            break;
+
+        current.push_back(candidates[i]);
+        backtrack(candidates, i, current, remaining - candidates[i], result);
+        current.pop_back();
+    }
+}
+
+int main() {
+    int n, target;
+    cout << "Experiment 2.1 B : Combination Sum Optimized Approach: Backtracking with a Start Index \n";
+    cout << "Enter number of candidates: ";
+    cin >> n;
+
+    vector<int> candidates(n);
+
+    cout << "Enter candidates: ";
+    for (int i = 0; i < n; i++)
+        cin >> candidates[i];
+
+    cout << "Enter target: ";
+    cin >> target;
+
+    sort(candidates.begin(), candidates.end());
+
+    vector<vector<int>> result;
+    vector<int> current;
+
+    backtrack(candidates, 0, current, target, result);
+
+    cout << "Combinations are:\n";
+
+    if (result.empty()) {
+        cout << "[]\n";
+    } else {
+        for (auto combination : result) {
+            cout << "[ ";
+            for (int x : combination)
+                cout << x << " ";
+            cout << "]\n";
+        }
+    }
+
+    return 0;
+}

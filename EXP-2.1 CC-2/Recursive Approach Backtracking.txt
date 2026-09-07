@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void backtrack(vector<int>& nums, int start, vector<int>& current, vector<vector<int>>& result) {
+    result.push_back(current);
+
+    for (int i = start; i < nums.size(); i++) {
+        current.push_back(nums[i]);
+        backtrack(nums, i + 1, current, result);
+        current.pop_back();
+    }
+}
+
+int main() {
+    int n;
+    cout << "APPROACH :2  Recursive Approach: Backtracking  \n";
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter " << n << " elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    vector<vector<int>> result;
+    vector<int> current;
+
+    backtrack(nums, 0, current, result);
+
+    cout << "All subsets are:\n";
+
+    for (auto subset : result) {
+        cout << "[ ";
+        for (int x : subset) {
+            cout << x << " ";
+        }
+        cout << "]\n";
+    }
+
+    return 0;
+}

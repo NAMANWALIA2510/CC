@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void backtrack(vector<int>& candidates, int target, int start,
+               vector<int>& current, vector<vector<int>>& result) {
+    if (target == 0) {
+        result.push_back(current);
+        return;
+    }
+
+    for (int i = start; i < candidates.size(); i++) {
+        if (candidates[i] > target)
+            continue;
+
+        current.push_back(candidates[i]);
+
+        backtrack(candidates, target - candidates[i], i, current, result);
+
+        current.pop_back();
+    }
+}
+
+int main() {
+    int n, target;
+    cout<<"Experiment 2.1 B : Combination Sum BRUTE FORCE APPROACH\n";
+    cout << "Enter number of candidates: ";
+    cin >> n;
+
+    vector<int> candidates(n);
+
+    cout << "Enter candidates: ";
+    for (int i = 0; i < n; i++) {
+        cin >> candidates[i];
+    }
+
+    cout << "Enter target: ";
+    cin >> target;
+
+    vector<vector<int>> result;
+    vector<int> current;
+
+    backtrack(candidates, target, 0, current, result);
+
+    cout << "Combinations are:\n";
+
+    if (result.empty()) {
+        cout << "[]\n";
+    } else {
+        for (auto combination : result) {
+            cout << "[ ";
+            for (int x : combination) {
+                cout << x << " ";
+            }
+            cout << "]\n";
+        }
+    }
+
+    return 0;
+}
