@@ -1,0 +1,96 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = right = NULL;
+    }
+};
+
+bool findPath(Node* root, int target, vector<Node*>& path) {
+    if (root == NULL) {
+        return false;
+    }
+
+    path.push_back(root);
+
+    if (root->data == target) {
+        return true;
+    }
+
+    if (findPath(root->left, target, path) || findPath(root->right, target, path)) {
+        return true;
+    }
+
+    path.pop_back();
+    return false;
+}
+
+int main() {
+    cout << " Lowest Common Ancestor  by BRUTE FORCE APPROACH \n";
+    int n;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    vector<int> values(n);
+
+    cout << "Enter level order values (-1 for NULL): ";
+    for (int i = 0; i < n; i++) {
+        cin >> values[i];
+    }
+
+    Node* root = new Node(values[0]);
+    queue<Node*> q;
+    q.push(root);
+
+    int i = 1;
+
+    while (!q.empty() && i < n) {
+        Node* current = q.front();
+        q.pop();
+
+        if (values[i] != -1) {
+            current->left = new Node(values[i]);
+            q.push(current->left);
+        }
+        i++;
+
+        if (i < n && values[i] != -1) {
+            current->right = new Node(values[i]);
+            q.push(current->right);
+        }
+        i++;
+    }
+
+    int p, qValue;
+    cout << "Enter p and q: ";
+    cin >> p >> qValue;
+
+    vector<Node*> path1;
+    vector<Node*> path2;
+
+    findPath(root, p, path1);
+    findPath(root, qValue, path2);
+
+    Node* lca = NULL;
+
+    for (int j = 0; j < path1.size() && j < path2.size(); j++) {
+        if (path1[j] == path2[j]) {
+            lca = path1[j];
+        } else {
+            break;
+        }
+    }
+
+    cout << "Lowest Common Ancestor: " << lca->data << endl;
+
+    return 0;
+}
+
