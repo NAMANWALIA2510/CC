@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = right = NULL;
+    }
+};
+
+int main() {
+    cout << "  Inorder Successor in BST  by BRUTE FORCE APPROACH \n";
+    int n;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    vector<string> values(n);
+
+    cout << "Enter level order values (# for NULL): ";
+    for (int i = 0; i < n; i++) {
+        cin >> values[i];
+    }
+
+    Node* root = new Node(stoi(values[0]));
+    queue<Node*> q;
+    q.push(root);
+
+    int i = 1;
+
+    while (!q.empty() && i < n) {
+        Node* current = q.front();
+        q.pop();
+
+        if (values[i] != "#") {
+            current->left = new Node(stoi(values[i]));
+            q.push(current->left);
+        }
+
+        i++;
+
+        if (i < n && values[i] != "#") {
+            current->right = new Node(stoi(values[i]));
+            q.push(current->right);
+        }
+
+        i++;
+    }
+
+    int pValue;
+    cout << "Enter p value: ";
+    cin >> pValue;
+
+    vector<Node*> order;
+    vector<Node*> stack;
+    Node* current = root;
+
+    while (current != NULL || !stack.empty()) {
+        while (current != NULL) {
+            stack.push_back(current);
+            current = current->left;
+        }
+
+        current = stack.back();
+        stack.pop_back();
+
+        order.push_back(current);
+
+        current = current->right;
+    }
+
+    Node* successor = NULL;
+
+    for (int j = 0; j < order.size(); j++) {
+        if (order[j]->data == pValue) {
+            if (j + 1 < order.size()) {
+                successor = order[j + 1];
+            }
+            break;
+        }
+    }
+
+    if (successor == NULL) {
+        cout << "In-order Successor: null" << endl;
+    } else {
+        cout << "In-order Successor: " << successor->data << endl;
+    }
+
+    return 0;
+}

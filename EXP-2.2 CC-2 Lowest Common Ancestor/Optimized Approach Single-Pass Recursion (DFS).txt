@@ -1,0 +1,104 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = right = NULL;
+    }
+};
+
+Node* findNode(Node* root, int value) {
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (root->data == value) {
+        return root;
+    }
+
+    Node* left = findNode(root->left, value);
+
+    if (left != NULL) {
+        return left;
+    }
+
+    return findNode(root->right, value);
+}
+
+Node* findLCA(Node* root, Node* p, Node* q) {
+    if (root == NULL || root == p || root == q) {
+        return root;
+    }
+
+    Node* left = findLCA(root->left, p, q);
+    Node* right = findLCA(root->right, p, q);
+
+    if (left != NULL && right != NULL) {
+        return root;
+    }
+
+    if (left != NULL) {
+        return left;
+    }
+
+    return right;
+}
+
+int main() {
+    cout << " Lowest Common Ancestor  by  Optimized Approach: Single-Pass Recursion (DFS)  \n";
+    int n;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    vector<int> values(n);
+
+    cout << "Enter level order values (-1 for NULL): ";
+    for (int i = 0; i < n; i++) {
+        cin >> values[i];
+    }
+
+    Node* root = new Node(values[0]);
+    queue<Node*> q;
+    q.push(root);
+
+    int i = 1;
+
+    while (!q.empty() && i < n) {
+        Node* current = q.front();
+        q.pop();
+
+        if (values[i] != -1) {
+            current->left = new Node(values[i]);
+            q.push(current->left);
+        }
+
+        i++;
+
+        if (i < n && values[i] != -1) {
+            current->right = new Node(values[i]);
+            q.push(current->right);
+        }
+
+        i++;
+    }
+
+    int pValue, qValue;
+    cout << "Enter p and q: ";
+    cin >> pValue >> qValue;
+
+    Node* p = findNode(root, pValue);
+    Node* qNode = findNode(root, qValue);
+
+    Node* lca = findLCA(root, p, qNode);
+
+    cout << "Lowest Common Ancestor: " << lca->data << endl;
+
+    return 0;
+}
