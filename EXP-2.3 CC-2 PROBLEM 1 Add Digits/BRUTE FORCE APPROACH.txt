@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    long long num;
+
+    cout << "Experiment Name: Add Digits using Brute Force Approach" << endl;
+    cout << "Enter a non-negative integer: ";
+    cin >> num;
+
+    while (num >= 10) {
+        long long sum = 0;
+
+        while (num > 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+
+        num = sum;
+    }
+
+    cout << "Single digit result: " << num << endl;
+
+    return 0;
+}

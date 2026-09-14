@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    long long num, result;
+
+    cout << "Experiment Name: Add Digits using Optimized Digital Root Approach" << endl;
+    cout << "Enter a non-negative integer: ";
+    cin >> num;
+
+    if (num == 0) {
+        result = 0;
+    } else {
+        result = 1 + (num - 1) % 9;
+    }
+
+    cout << "Single digit result: " << result << endl;
+
+    return 0;
+}

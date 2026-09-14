@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+
+int main() {
+    int n, duplicate = -1;
+
+    cout << "Experiment Name: Find the Duplicate No. using Brute Force Hash Set Approach\n" << endl;
+    cout << "Enter n: ";
+    cin >> n;
+
+    vector<int> nums(n + 1);
+    unordered_set<int> seen;
+
+    cout << "Enter " << n + 1 << " array elements one by one:" << endl;
+
+    for (int i = 0; i <= n; i++) {
+        cout << "Enter element " << i + 1 << ": ";
+        cin >> nums[i];
+
+        if (seen.count(nums[i])) {
+            duplicate = nums[i];
+        } else {
+            seen.insert(nums[i]);
+        }
+    }
+
+    cout << "Repeated number: " << duplicate << endl;
+
+    return 0;
+}
