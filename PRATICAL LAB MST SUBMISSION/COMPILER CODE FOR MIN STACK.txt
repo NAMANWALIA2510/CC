@@ -1,0 +1,57 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+class MinStack {
+private:
+    stack<int> mainStack;   // Stores all values
+    stack<int> minStack;    // Stores current minimums
+
+public:
+    // Constructor
+    MinStack() {}
+
+    // Push value onto stack
+    void push(int value) {
+        mainStack.push(value);
+        // If minStack is empty or value <= current min, push it to minStack
+        if (minStack.empty() || value <= minStack.top()) {
+            minStack.push(value);
+        }
+    }
+
+    // Remove top element
+    void pop() {
+        if (mainStack.top() == minStack.top()) {
+            minStack.pop();
+        }
+        mainStack.pop();
+    }
+
+    // Get top element
+    int top() {
+        return mainStack.top();
+    }
+
+    // Retrieve minimum element
+    int getMin() {
+        return minStack.top();
+    }
+};
+
+
+int main() {
+    MinStack minStack;
+    minStack.push(10);
+    minStack.push(0);
+    minStack.push(-2);
+    minStack.push(5);
+    minStack.push(2);
+    minStack.push(-3);
+    cout <<"It is the  minimum element in the stack:- "<< minStack.getMin() << endl; // Output: -3
+    minStack.pop();
+    cout <<"TOP element from the stack is deleted !!!"<<endl;
+    cout <<"It is the TOP element in the stack:- "<< minStack.top() << endl;    // Output: 2
+    cout <<"It is the LATEST MINIMUN element in the stack:- "<< minStack.getMin() << endl; // Output: 
+    return 0;
+}
