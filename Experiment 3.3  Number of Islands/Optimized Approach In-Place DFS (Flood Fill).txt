@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    cout << "Experiment 3.3: Number of Islands Problem" << endl;
+    cout << "Subject: CC-II (24CSP-339)" << endl;
+
+    int m, n;
+    cout << "Enter number of rows: ";
+    cin >> m;
+
+    cout << "Enter number of columns: ";
+    cin >> n;
+
+    vector<vector<char>> grid(m, vector<char>(n));
+
+    cout << "Enter the grid (0 or 1):" << endl;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> grid[i][j];
+        }
+    }
+
+    int count = 0;
+
+    auto dfs = [&](auto&& dfs, int r, int c) -> void {
+        if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] != '1')
+            return;
+
+        grid[r][c] = '0';
+
+        dfs(dfs, r - 1, c);
+        dfs(dfs, r + 1, c);
+        dfs(dfs, r, c - 1);
+        dfs(dfs, r, c + 1);
+    };
+
+    for (int r = 0; r < m; r++) {
+        for (int c = 0; c < n; c++) {
+            if (grid[r][c] == '1') {
+                count++;
+                dfs(dfs, r, c);
+            }
+        }
+    }
+
+    cout << "Number of Islands: " << count << endl;
+
+    return 0;
+}

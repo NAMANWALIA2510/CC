@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main() {
+    cout << "Experiment 3.3.2: Find if Path Exists in Graph" << endl;
+    cout << "BFS APPROACH" << endl;
+    cout << "Subject: CC-II (24CSP-339)" << endl;
+
+    int n, e;
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    cout << "Enter number of edges: ";
+    cin >> e;
+
+    vector<vector<int>> adj(n);
+
+    cout << "Enter the edges:" << endl;
+    for (int i = 0; i < e; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    int source, destination;
+    cout << "Enter source: ";
+    cin >> source;
+
+    cout << "Enter destination: ";
+    cin >> destination;
+
+    vector<bool> visited(n, false);
+    queue<int> q;
+
+    q.push(source);
+    visited[source] = true;
+
+    bool found = false;
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+
+        if (node == destination) {
+            found = true;
+            break;
+        }
+
+        for (int next : adj[node]) {
+            if (!visited[next]) {
+                visited[next] = true;
+                q.push(next);
+            }
+        }
+    }
+
+    if (found)
+        cout << "Path exists: true" << endl;
+    else
+        cout << "Path exists: false" << endl;
+
+    return 0;
+}
