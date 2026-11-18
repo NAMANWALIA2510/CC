@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    cout << "Optimized approach: two passes , NAMAN WALIA , 24BAI70451 \n";
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Array size must be positive.\n";
+        return 1;
+    }
+https://www.onlinegdb.com/online_c++_compiler#tab-stdin
+    vector<int> nums(n);
+
+    cout << "Enter " << n << " integers: ";
+    for (int& value : nums) {
+        cin >> value;
+    }
+
+    vector<long long> answer(n, 1);
+
+    long long prefixProduct = 1;
+    for (int i = 0; i < n; ++i) {
+        answer[i] = prefixProduct;
+        prefixProduct *= nums[i];
+    }
+
+    long long suffixProduct = 1;
+    for (int i = n - 1; i >= 0; --i) {
+        answer[i] *= suffixProduct;
+        suffixProduct *= nums[i];
+    }
+
+    cout << "\nInput array: ";
+    for (int value : nums) cout << value << " ";
+
+    cout << "\nProduct except self: ";
+    for (long long value : answer) cout << value << " ";
+
+    cout << "\n\nApproach: Optimized two-pass prefix/suffix"
+         << "\nTime complexity: O(n)"
+         << "\nExtra space complexity: O(1), excluding the output array\n";
+
+    return 0;
+}

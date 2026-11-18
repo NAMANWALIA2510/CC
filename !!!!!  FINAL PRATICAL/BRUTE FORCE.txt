@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    cout << "BRUTE FORCE APPROACH , NAMAN WALIA , 24BAI70451 \n";
+    
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Array size must be positive.\n";
+        return 1;
+    }
+
+    vector<int> nums(n);
+
+    cout << "Enter " << n << " integers: ";
+    for (int& value : nums) {
+        cin >> value;
+    }
+
+    vector<long long> answer(n, 1);
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i != j) {
+                answer[i] *= nums[j];
+            }
+        }
+    }
+
+    cout << "\nInput array: ";
+    for (int value : nums) cout << value << " ";
+
+    cout << "\nProduct except self: ";
+    for (long long value : answer) cout << value << " ";
+
+    cout << "\n\nApproach: Brute force"
+         << "\nTime complexity: O(n^2)"
+         << "\nExtra space complexity: O(1), excluding the output array\n";
+
+    return 0;
+}

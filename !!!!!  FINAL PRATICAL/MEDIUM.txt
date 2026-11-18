@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    cout << "Medium approach: prefix and suffix arrays , NAMAN WALIA , 24BAI70451 \n";
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Array size must be positive.\n";
+        return 1;
+    }
+
+    vector<int> nums(n);
+
+    cout << "Enter " << n << " integers: ";
+    for (int& value : nums) {
+        cin >> value;
+    }
+
+    vector<long long> prefix(n, 1);
+    vector<long long> suffix(n, 1);
+    vector<long long> answer(n);
+
+    for (int i = 1; i < n; ++i) {
+        prefix[i] = prefix[i - 1] * nums[i - 1];
+    }
+
+    for (int i = n - 2; i >= 0; --i) {
+        suffix[i] = suffix[i + 1] * nums[i + 1];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        answer[i] = prefix[i] * suffix[i];
+    }
+
+    cout << "\nInput array: ";
+    for (int value : nums) cout << value << " ";
+
+    cout << "\nProduct except self: ";
+    for (long long value : answer) cout << value << " ";
+
+    cout << "\n\nApproach: Prefix and suffix arrays"
+         << "\nTime complexity: O(n)"
+         << "\nExtra space complexity: O(n), excluding the output array\n";
+
+    return 0;
+}
